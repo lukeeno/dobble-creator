@@ -1,29 +1,25 @@
 {
-  "name": "dobble",
-  "private": true,
+  "name": "@lukeeno/dobble-creator",
   "version": "0.0.0",
+  "description": "",
+  "license": "MIT",
   "scripts": {
+    "build": "vite build",
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "prettier": {
-    "singleQuote": true
+    "serve": "vite preview",
+    "start": "vite"
   },
   "dependencies": {
     "lodash.range": "^3.2.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "solid-js": "^1.3.12"
   },
   "devDependencies": {
     "@types/lodash.range": "^3.2.6",
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
-    "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.23",
-    "typescript": "^4.5.4",
-    "vite": "^2.8.0"
+    "typescript": "^4.6.2",
+    "vite": "^2.8.6",
+    "vite-plugin-solid": "^2.2.6"
   }
 }

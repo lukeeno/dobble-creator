@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createEffect, createSignal } from 'solid-js';
 import range from 'lodash.range';
 
 const originalSymbols = [
@@ -66,9 +66,10 @@ function App() {
   const cards: number[][] = [];
   const n = numberOfSymbolsOnCard - 1;
   const numberOfCards = n ** 2 + n + 1;
-  const [symbols, setSymbols] = useState(range(numberOfCards).map(() => ''));
-  const [show, setShow] = useState(true);
-  const [message, setMessage] = useState('');
+  const [symbols, setSymbols] = createSignal(range(numberOfCards).map(() => ''));
+  const [show, setShow] = createSignal(true);
+  const [message, setMessage] = createSignal('');
+  const [hover, setHover] = createSignal(-1);
 
   for (const i of range(n + 1)) {
     cards.push([1]);
@@ -90,18 +91,18 @@ function App() {
   }
 
   function setSymbol(e: any, i: number) {
-    symbols[i] = e.target.value;
-    setSymbols([...symbols]);
+    symbols()[i] = e.target.value;
+    setSymbols([...symbols()]);
   }
 
   function save() {
-    localStorage.setItem('symbols', JSON.stringify(symbols));
+    localStorage.setItem('dobble-symbols', JSON.stringify(symbols()));
     setMessage('Successfully saved');
     setTimeout(() => setMessage(''), 3000);
   }
 
   function load() {
-    const strItems = localStorage.getItem('symbols');
+    const strItems = localStorage.getItem('dobble-symbols');
     if (!strItems) {
       return;
     }
@@ -123,7 +124,7 @@ function App() {
     setSymbols(range(numberOfCards).map(() => ''));
   }
 
-  useEffect(load, []);
+  createEffect(load, []);
 
   return (
     <main className="bg-gray-200">
@@ -156,28 +157,27 @@ function App() {
             Load
           </button>
           <button
-            onClick={() => setShow(!show)}
+            onClick={() => setShow(!show())}
             className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
           >
-            {show ? 'Hide' : 'Show'}
+            {show() ? 'Hide' : 'Show'}
           </button>
         </div>
 
-        {message && (
+        {message() && (
           <div className="bg-green-500 text-white p-4 rounded-lg">
-            {message}
+            {message()}
           </div>
         )}
 
-        {show && (
+        {show() && (
           <div className="grid grid-cols-5 gap-2">
-            {symbols.map((card, i) => {
+            {symbols().map((card, i) => {
               return (
                 <input
-                  key={i}
                   className="w-full rounded-lg bg-white p-2"
                   type="text"
-                  value={symbols[i]}
+                  value={symbols()[i]}
                   onChange={(e) => setSymbol(e, i)}
                 />
               );
@@ -188,8 +188,16 @@ function App() {
         <div className="grid grid-cols-5 gap-2">
           {cards.map((card, i) => {
             return (
-              <div key={i} className="rounded-lg bg-white p-2">
-                {card.map((symbol) => [symbols[symbol - 1], <br />])}
+              <div className="rounded-lg bg-white py-2 px-1">
+                {card.map((symbol) => (
+                  <div
+                    className={(symbol === hover() ? "bg-purple-400" : '') + ' px-2 rounded'}
+                    onMouseEnter={() => setHover(symbol)}
+                    onMouseLeave={() => setHover(-1)}
+                  >
+                    {symbols()[symbol - 1]}
+                  </div>
+                ))}
               </div>
             );
           })}
