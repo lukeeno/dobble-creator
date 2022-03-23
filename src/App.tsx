@@ -1,74 +1,78 @@
-import { createEffect, createSignal } from 'solid-js';
-import range from 'lodash.range';
+import { createEffect, createSignal } from "solid-js";
+import range from "lodash.range";
 
 const originalSymbols = [
-  'Anchor',
-  'Apple',
-  'Bomb',
-  'Cactus',
-  'Candle',
-  'Carrot',
-  'Cheese',
-  'Chess knight',
-  'Clock',
-  'Clown',
-  'Diasy flower',
-  'Dinosaur',
-  'Dolphin',
-  'Dragon',
-  'Exclamation mark',
-  'Eye',
-  'Fire',
-  'Four leaf clover',
-  'Ghost',
-  'Green splats',
-  'Hammer',
-  'Heart',
-  'Ice cube',
-  'Igloo',
-  'Key',
-  'Ladybird',
-  'Light bulb',
-  'Lightning bolt',
-  'Lock',
-  'Maple leaf',
-  'Milk bottle',
-  'Moon',
-  'No Entry sign',
-  'Orange scarecrow man',
-  'Pencil',
-  'Purple bird',
-  'Purple cat',
-  'Purple dobble sign',
-  'Question Mark',
-  'Red lips',
-  'Scissors',
-  'Skull and crossbones',
-  'Snowflake',
-  'Snowman',
-  'Spider',
+  "Anchor",
+  "Apple",
+  "Bomb",
+  "Cactus",
+  "Candle",
+  "Carrot",
+  "Cheese",
+  "Chess knight",
+  "Clock",
+  "Clown",
+  "Diasy flower",
+  "Dinosaur",
+  "Dolphin",
+  "Dragon",
+  "Exclamation mark",
+  "Eye",
+  "Fire",
+  "Four leaf clover",
+  "Ghost",
+  "Green splats",
+  "Hammer",
+  "Heart",
+  "Ice cube",
+  "Igloo",
+  "Key",
+  "Ladybird",
+  "Light bulb",
+  "Lightning bolt",
+  "Lock",
+  "Maple leaf",
+  "Milk bottle",
+  "Moon",
+  "No Entry sign",
+  "Orange scarecrow man",
+  "Pencil",
+  "Purple bird",
+  "Purple cat",
+  "Purple dobble sign",
+  "Question Mark",
+  "Red lips",
+  "Scissors",
+  "Skull and crossbones",
+  "Snowflake",
+  "Snowman",
+  "Spider",
   "Spider's web",
-  'Sun',
-  'Sunglasses',
-  'Target',
-  'Taxi',
-  'Tortoise',
-  'Treble clef',
-  'Tree',
-  'Water drop',
-  'Dog',
-  'Yin and Yang',
-  'Zebra',
+  "Sun",
+  "Sunglasses",
+  "Target",
+  "Taxi",
+  "Tortoise",
+  "Treble clef",
+  "Tree",
+  "Water drop",
+  "Dog",
+  "Yin and Yang",
+  "Zebra",
 ];
+
+originalSymbols.sort();
 
 function App() {
   const numberOfSymbolsOnCard = 8;
   const cards: number[][] = [];
   const n = numberOfSymbolsOnCard - 1;
   const numberOfCards = n ** 2 + n + 1;
-  const [symbols, setSymbols] = createSignal(range(numberOfCards).map(() => ''));
+  const [symbols, setSymbols] = createSignal(
+    range(numberOfCards).map(() => "")
+  );
   const [show, setShow] = createSignal(true);
-  const [message, setMessage] = createSignal('');
+  const [message, setMessage] = createSignal("");
   const [hover, setHover] = createSignal(-1);
 
   for (const i of range(n + 1)) {
@@ -91,18 +95,20 @@ function App() {
   }
 
   function setSymbol(e: any, i: number) {
-    symbols()[i] = e.target.value;
-    setSymbols([...symbols()]);
+    const symbolList = symbols();
+    symbolList[i] = e.target.value;
+    symbolList.sort();
+    setSymbols([...symbolList]);
   }
 
   function save() {
-    localStorage.setItem('dobble-symbols', JSON.stringify(symbols()));
-    setMessage('Successfully saved');
-    setTimeout(() => setMessage(''), 3000);
+    localStorage.setItem("dobble-symbols", JSON.stringify(symbols()));
+    setMessage("Successfully saved");
+    setTimeout(() => setMessage(""), 3000);
   }
 
   function load() {
-    const strItems = localStorage.getItem('dobble-symbols');
+    const strItems = localStorage.getItem("dobble-symbols");
     if (!strItems) {
       return;
     }
@@ -111,8 +117,8 @@ function App() {
     if (items) {
       setSymbols(items);
 
-      setMessage('Successfully loaded');
-      setTimeout(() => setMessage(''), 3000);
+      setMessage("Successfully loaded");
+      setTimeout(() => setMessage(""), 3000);
     }
   }
 
@@ -121,7 +127,7 @@ function App() {
   }
 
   function clear() {
-    setSymbols(range(numberOfCards).map(() => ''));
+    setSymbols(range(numberOfCards).map(() => ""));
   }
 
   createEffect(load, []);
@@ -160,7 +166,7 @@ function App() {
             onClick={() => setShow(!show())}
             className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
           >
-            {show() ? 'Hide' : 'Show'}
+            {show() ? "Hide" : "Show"}
           </button>
         </div>
 
@@ -191,7 +197,10 @@ function App() {
               <div className="rounded-lg bg-white py-2 px-1">
                 {card.map((symbol) => (
                   <div
-                    className={(symbol === hover() ? "bg-purple-400" : '') + ' px-2 rounded'}
+                    className={
+                      (symbol === hover() ? "bg-purple-400" : "") +
+                      " px-2 rounded"
+                    }
                     onMouseEnter={() => setHover(symbol)}
                     onMouseLeave={() => setHover(-1)}
                   >
