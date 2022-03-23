@@ -1,12 +1,12 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@types/lodash': ^4.14.180
+  '@types/lodash.range': ^3.2.6
   '@types/react': ^17.0.33
   '@types/react-dom': ^17.0.10
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.4
-  lodash: ^4.17.21
+  lodash.range: ^3.2.0
   postcss: ^8.4.12
   react: ^17.0.2
   react-dom: ^17.0.2
@@ -15,12 +15,12 @@ specifiers:
   vite: ^2.8.0
 
 dependencies:
-  lodash: 4.17.21
+  lodash.range: 3.2.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
 
 devDependencies:
-  '@types/lodash': 4.14.180
+  '@types/lodash.range': 3.2.6
   '@types/react': 17.0.42
   '@types/react-dom': 17.0.14
   '@vitejs/plugin-react': 1.2.0
@@ -343,6 +343,12 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    dev: true
+
+  /@types/lodash.range/3.2.6:
+    resolution: {integrity: sha512-bofMTb/7zteggVbeQfMp5iMd1Dar0txmq/i2HEWgrRabF4HxZsyHeny9YktvUGpgkk2m1A4qEkUovVWpbFDYRg==}
+    dependencies:
+      '@types/lodash': 4.14.180
     dev: true
 
   /@types/lodash/4.14.180:
@@ -966,8 +972,8 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
 
-  /lodash/4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+  /lodash.range/3.2.0:
+    resolution: {integrity: sha1-9GHliPZmg/fq3q3lE+OKaaVloV0=}
     dev: false
 
   /loose-envify/1.4.0:

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import _ from 'lodash';
+import range from 'lodash.range';
 
 const originalSymbols = [
   'Anchor',
@@ -66,23 +66,23 @@ function App() {
   const cards: number[][] = [];
   const n = numberOfSymbolsOnCard - 1;
   const numberOfCards = n ** 2 + n + 1;
-  const [symbols, setSymbols] = useState(_.range(numberOfCards).map(() => ''));
+  const [symbols, setSymbols] = useState(range(numberOfCards).map(() => ''));
   const [show, setShow] = useState(true);
   const [message, setMessage] = useState('');
 
-  for (const i of _.range(n + 1)) {
+  for (const i of range(n + 1)) {
     cards.push([1]);
 
-    for (const j of _.range(n)) {
+    for (const j of range(n)) {
       cards[i].push(j + 1 + i * n + 1);
     }
   }
 
-  for (const i of _.range(n)) {
-    for (const j of _.range(n)) {
+  for (const i of range(n)) {
+    for (const j of range(n)) {
       cards.push([i + 2]);
 
-      for (const k of _.range(n)) {
+      for (const k of range(n)) {
         const val = n + 1 + n * k + ((i * k + j) % n) + 1;
         cards[cards.length - 1].push(val);
       }
@@ -115,8 +115,12 @@ function App() {
     }
   }
 
+  function loadOriginalSymbols() {
+    setSymbols([...originalSymbols]);
+  }
+
   function clear() {
-    setSymbols(_.range(numberOfCards).map(() => ''));
+    setSymbols(range(numberOfCards).map(() => ''));
   }
 
   useEffect(load, []);
@@ -132,6 +136,12 @@ function App() {
             className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
           >
             Clear
+          </button>
+          <button
+            onClick={loadOriginalSymbols}
+            className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
+          >
+            Load original symbols
           </button>
           <button
             onClick={save}
